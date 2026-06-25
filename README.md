@@ -175,7 +175,7 @@ Esto carga automáticamente la configuración guardada con **Fixed Frame:** `map
 
 <!-- 📸 PLACEHOLDER: GIF mostrando el mapa construyéndose en tiempo real en RViz2 -->
 <p align="center">
-  <img src="docs/images/slam_demo.gif" alt="SLAM en RViz2" width="600"/>
+  <img src="docs/images/Peek 2026-06-25 01-55.gif" alt="SLAM en RViz2" width="600"/>
 </p>
 
 ```bash
