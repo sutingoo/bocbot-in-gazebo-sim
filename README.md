@@ -7,7 +7,7 @@
 
 BocBot is an **autonomous differential drive mobile robot (4 wheels)** simulated in Gazebo, designed for navigation, mapping, and obstacle avoidance tasks in structured indoor environments.
 
-This project is based on the [**"Build Robot using ROS 2 and Gazebo"**](https://bunchofcoders.github.io/basic_bocbot/) guide by [bunchofcoders](https://github.com/bunchofcoders), originally written for **ROS 2 Eloquent** and **Gazebo Classic** (2020). Since that stack is now outdated, **I migrated the entire project to ROS 2 Jazzy Jalisco and Gazebo Harmonic**. This involved rewriting the simulation plugins, adapting the SDF world format, and adjusting the topic flow to the new Gazebo architecture. See the [Origin and migration](#-origen-y-migración) section for full details on the changes.
+This project is based on the [**"Build Robot using ROS 2 and Gazebo"**](https://bunchofcoders.github.io/basic_bocbot/) guide by [bunchofcoders](https://github.com/bunchofcoders), originally written for **ROS 2 Eloquent** and **Gazebo Classic** (2020). Since that stack is now outdated, **I migrated the entire project to ROS 2 Jazzy Jalisco and Gazebo Harmonic**. This involved rewriting the simulation plugins, adapting the SDF world format, and adjusting the topic flow to the new Gazebo architecture. See the [Origin and migration](#-origin-and-migration) section for full details on the changes.
 
 ---
 
