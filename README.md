@@ -3,7 +3,7 @@
 <!-- 📸 PLACEHOLDER: GIF o imagen principal del robot navegando en Gazebo -->
 <!-- Sugerencia: graba con `peek` o `simplescreenrecorder` y convierte a GIF con `ffmpeg` -->
 <p align="center">
-  <img src="docs/images/bocbot_demo.gif" alt="BocBot navegando en Gazebo" width="700"/>
+  <img src="docs/images/Screenshot from 2026-06-24 01-35-03.png" alt="BocBot navegando en Gazebo" width="700"/>
 </p>
 
 BocBot es un **robot móvil autónomo de tracción diferencial (4 ruedas)** simulado en Gazebo, diseñado para tareas de navegación, mapeo y evasión de obstáculos en entornos interiores estructurados.
