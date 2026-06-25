@@ -6,9 +6,9 @@
   <img src="docs/images/bocbot_demo.gif" alt="BocBot navegando en Gazebo" width="700"/>
 </p>
 
-BocBot es un **robot móvil autónomo de tracción diferencial (4 ruedas)** simulado en Gazebo Harmonic, diseñado para tareas de navegación, mapeo y evasión de obstáculos en entornos interiores estructurados.
+BocBot es un **robot móvil autónomo de tracción diferencial (4 ruedas)** simulado en Gazebo, diseñado para tareas de navegación, mapeo y evasión de obstáculos en entornos interiores estructurados.
 
-Este repositorio contiene el workspace de ROS 2 (`bocbot_ws`) con el paquete `bocbot`, que integra el modelo del robot, los sensores y el entorno de simulación.
+Este proyecto está basado en la guía [**"Build Robot using ROS 2 and Gazebo"**](https://bunchofcoders.github.io/basic_bocbot/) de [bunchofcoders](https://github.com/bunchofcoders), originalmente escrita para **ROS 2 Eloquent** y **Gazebo Classic** (2020). Como ese stack ya quedó desactualizado, **migré el proyecto completo a ROS 2 Jazzy Jalisco y Gazebo Harmonic**, lo que implicó reescribir los plugins de simulación, adaptar el formato de mundo SDF y ajustar el flujo de tópicos a la nueva arquitectura de Gazebo. Ver la sección [Origen y migración](#-origen-y-migración) para el detalle completo de los cambios.
 
 ---
 
@@ -195,6 +195,28 @@ Esto exporta el mapa como `.pgm`/`.png` junto con su `.yaml` de metadatos.
 
 ---
 
+## 🔄 Origen y migración
+
+Este proyecto parte de la guía [*Build Robot using ROS 2 and Gazebo*](https://bunchofcoders.github.io/basic_bocbot/), que enseña los fundamentos de URDF, plugins de Gazebo y el flujo básico de ROS 2 usando un robot de 4 ruedas con cámara y LiDAR (de ahí el nombre BocBot — **B**unch **o**f **C**oders **Bot**).
+
+La guía original usa un stack que ya no se distribuye activamente (Eloquent llegó a su fin de vida en 2020, y Gazebo Classic está siendo reemplazado por Gazebo moderno). Adapté el proyecto completo al stack actual:
+
+| Aspecto | Guía original | Este proyecto |
+|---|---|---|
+| ROS 2 | Eloquent (2019) | Jazzy Jalisco |
+| Simulador | Gazebo Classic | Gazebo Harmonic |
+| Plugin de tracción | `libgazebo_ros_diff_drive.so` | `gz::sim::systems::DiffDrive` |
+| Plugin de cámara | `libgazebo_ros_camera.so` | Sistema de sensores nativo de Harmonic |
+| Plugin de LiDAR | `libgazebo_ros_ray_sensor.so` | `gz::sim::systems::Sensors` (`gpu_lidar`) |
+| Estado de las ruedas | No incluido | `gz::sim::systems::JointStatePublisher` (agregado) |
+| Formato de mundo | `boc_office.world` (SDF 1.6) | `bocbot_office.sdf` (SDF 1.8) |
+| Spawn del robot | Llamada manual al servicio `/spawn_entity` con XML escapado | `ros_gz_bridge` / herramientas nativas de Harmonic |
+| Namespacing de tópicos | Todo bajo `/bocbot/*` | Sin namespace (`/cmd_vel`, `/scan`, `/odom`) |
+
+Este cambio de arquitectura (plugins clásicos → sistemas nativos `gz::sim::systems`) no es solo un cambio de nombres: Gazebo Harmonic reorganizó por completo cómo los plugins se registran y comunican con ROS 2, así que fue necesario reescribir la configuración de sensores y el puente de comunicación desde cero.
+
+---
+
 ## 🗺️ Roadmap
 
 - [ ] Navegación autónoma con Nav2
@@ -206,3 +228,5 @@ Esto exporta el mapa como `.pgm`/`.png` junto con su `.yaml` de metadatos.
 ## 📄 Licencia
 
 Este proyecto está bajo la licencia MIT. Consulta el archivo [LICENSE](LICENSE) para más detalles.
+
+El diseño base del robot y del mundo de simulación proviene de la guía de [bunchofcoders](https://github.com/bunchofcoders/basic_bocbot) — todo el crédito por el concepto original es de ellos. El código de este repositorio refleja la migración y adaptación al stack moderno (ROS 2 Jazzy + Gazebo Harmonic).
