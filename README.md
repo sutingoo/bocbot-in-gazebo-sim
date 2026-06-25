@@ -20,7 +20,7 @@ BocBot navega un entorno de oficina simulado (`bocbot_office.sdf`) con el objeti
 
 <!-- 📸 PLACEHOLDER: captura del modelo de BocBot en Gazebo o RViz, mostrando chasis, ruedas, cámara y LiDAR -->
 <p align="center">
-  <img src="docs/images/bocbot_model.png" alt="Modelo de BocBot" width="500"/>
+  <img src="docs/images/Screenshot from 2026-06-22 18-07-39.png" alt="Modelo de BocBot" width="500"/>
 </p>
 
 | Componente | Descripción |
