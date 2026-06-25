@@ -1,5 +1,11 @@
 # BocBot 🤖 — Simulación de Robot Móvil en Gazebo + ROS 2
 
+<!-- 📸 PLACEHOLDER: GIF o imagen principal del robot navegando en Gazebo -->
+<!-- Sugerencia: graba con `peek` o `simplescreenrecorder` y convierte a GIF con `ffmpeg` -->
+<p align="center">
+  <img src="docs/images/bocbot_demo.gif" alt="BocBot navegando en Gazebo" width="700"/>
+</p>
+
 BocBot es un **robot móvil autónomo de tracción diferencial (4 ruedas)** simulado en Gazebo Harmonic, diseñado para tareas de navegación, mapeo y evasión de obstáculos en entornos interiores estructurados.
 
 Este repositorio contiene el workspace de ROS 2 (`bocbot_ws`) con el paquete `bocbot`, que integra el modelo del robot, los sensores y el entorno de simulación.
@@ -11,6 +17,11 @@ Este repositorio contiene el workspace de ROS 2 (`bocbot_ws`) con el paquete `bo
 BocBot navega un entorno de oficina simulado (`bocbot_office.sdf`) con el objetivo de realizar **SLAM (Simultaneous Localization and Mapping)**: recorrer el espacio y construir un mapa 2D en tiempo real a partir de sus sensores.
 
 ### Componentes del robot
+
+<!-- 📸 PLACEHOLDER: captura del modelo de BocBot en Gazebo o RViz, mostrando chasis, ruedas, cámara y LiDAR -->
+<p align="center">
+  <img src="docs/images/bocbot_model.png" alt="Modelo de BocBot" width="500"/>
+</p>
 
 | Componente | Descripción |
 |---|---|
@@ -50,6 +61,14 @@ BocBot navega un entorno de oficina simulado (`bocbot_office.sdf`) con el objeti
 ```
 bocbot_ws/
 ├── README.md
+├── LICENSE
+├── Dockerfile
+├── docker-compose.yml
+├── .dockerignore
+├── docker/
+│   └── entrypoint.sh
+├── docs/
+│   └── images/          # Imágenes y GIFs usados en el README
 └── src/
     └── bocbot/
         ├── CMakeLists.txt
@@ -94,6 +113,36 @@ source install/setup.bash
 
 ---
 
+## 🐳 Uso con Docker (alternativa recomendada)
+
+Si no quieres instalar ROS2 Jazzy y Gazebo Harmonic manualmente, puedes usar el `Dockerfile` incluido. Esto evita problemas de versiones y dependencias.
+
+### Requisitos
+
+- [Docker](https://docs.docker.com/get-docker/) y [Docker Compose](https://docs.docker.com/compose/install/)
+- Linux con servidor X11 (para que Gazebo/RViz puedan mostrar ventanas gráficas)
+
+### Construir y levantar el contenedor
+
+```bash
+# Permite que el contenedor acceda a tu display (solo una vez por sesión)
+xhost +local:docker
+
+# Construye la imagen y levanta el contenedor
+docker compose up --build -d
+
+# Entra al contenedor
+docker compose exec bocbot bash
+```
+
+Dentro del contenedor, el workspace ya está compilado y con el entorno cargado — puedes correr directamente los comandos de la sección [Cómo ejecutar](#️-cómo-ejecutar) (necesitarás varias terminales: usa `docker compose exec bocbot bash` en cada una).
+
+> **Nota:** `docker-compose.yml` monta `./src` como volumen, así que los cambios que hagas en el código se reflejan sin reconstruir la imagen. Si agregas nuevas dependencias en `package.xml`, vuelve a correr `docker compose up --build`.
+
+> **Windows/Mac:** la configuración de `DISPLAY` y X11 es distinta (necesitas [VcXsrv](https://sourceforge.net/projects/vcxsrv/) en Windows o [XQuartz](https://www.xquartz.org/) en Mac). Si usas estos sistemas, avísame y te ayudo a adaptar el `docker-compose.yml`.
+
+---
+
 ## ▶️ Cómo ejecutar
 
 La ejecución completa requiere varias terminales abiertas en simultáneo (todas con `source install/setup.bash` ya ejecutado).
@@ -124,6 +173,11 @@ Esto carga automáticamente la configuración guardada con **Fixed Frame:** `map
 
 ### Terminal 4 — SLAM (mapeo)
 
+<!-- 📸 PLACEHOLDER: GIF mostrando el mapa construyéndose en tiempo real en RViz2 -->
+<p align="center">
+  <img src="docs/images/slam_demo.gif" alt="SLAM en RViz2" width="600"/>
+</p>
+
 ```bash
 ros2 launch slam_toolbox online_async_launch.py use_sim_time:=true params_file:=/opt/ros/jazzy/share/slam_toolbox/config/mapper_params_online_async.yaml
 ```
@@ -144,11 +198,11 @@ Esto exporta el mapa como `.pgm`/`.png` junto con su `.yaml` de metadatos.
 ## 🗺️ Roadmap
 
 - [ ] Navegación autónoma con Nav2
-- [ ] Dockerfile para entorno reproducible
 - [ ] Pruebas automatizadas (`colcon test`)
+- [ ] Soporte Docker para Windows/Mac (X11 forwarding)
 
 ---
 
 ## 📄 Licencia
 
-Pendiente de definir.
+Este proyecto está bajo la licencia MIT. Consulta el archivo [LICENSE](LICENSE) para más detalles.
